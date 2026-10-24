@@ -21,5 +21,3 @@ npm run dev
 ```
 
 The API allows `http://localhost:3000`. `POST /analyze` takes `{"country": "France"}` and returns `sentiment`, `figures_events`, and `threats`.
-
-Do not commit `backend/.venv`. A bearer token is hardcoded in `backend/app/services/country_analysis.py`. Rotate that credential and move it out of the source. It is not repeated here.
