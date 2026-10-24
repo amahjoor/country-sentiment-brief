@@ -1,57 +1,25 @@
-# GeoIntel Hub
+# Ask a model about a country and the United States
 
-An intelligence analysis platform that provides real-time insights into global geopolitical relationships, threat assessments, and sentiment analysis between nations.
+Hackathon UI for a country's relationship to the United States. You pick a country. The FastAPI backend sends three prompts (sentiment, key figures, and a threat writeup) to a Llama 3.1 70B chat endpoint and expects JSON back. It does not query a threat database, a news API, or a live feed. The numbers and sources on the page are whatever the model returns.
 
-## Features
+The page was started with Josh, Sahil, and Sam at the SCSP x AGI House hackathon on 11/15/24. No license is added, because this is not sole-author work.
 
-- 🌍 **Country Analysis**: Comprehensive analysis of any country's relationship with the United States
-- 🔍 **Multi-dimensional Analysis**:
-  - Sentiment Analysis
-  - Key Figures & Events Tracking
-  - Threat Assessment
-- 🎯 **Detailed Reports**:
-  - Threat Actor Profiles
-  - Historical Incidents
-  - Risk Assessment
-  - Vulnerability Analysis
-- 💻 **Modern Tech Stack**:
-  - Next.js 15.0
-  - TypeScript
-  - TailwindCSS
-  - FastAPI Backend
+## Run the page locally
 
-## Getting Started
+From `backend`, with the packages in `backend/requirements.txt` (FastAPI, Uvicorn, requests, python-dotenv, Pydantic):
 
-### Prerequisites
-
-- Node.js
-- Python 3.9+
-- npm or yarn
-
-### Installation and Setup
-
-1. Clone the repository:
-```
-git clone https://github.com/amahjoor/GeoIntel.git
-cd GeoIntel
-```
-
-2. Install dependencies
-```
-npm install
-```
-
-3. Run the FastAPI server
-```
-cd backend
+```bash
+pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-4. Run the development server
-```
-cd frontend
+From `frontend` (Next.js 15):
+
+```bash
+npm install
 npm run dev
 ```
 
-## Misc
-This project was initialized with my friends Josh, Sahil, and Sam at the SCSP x AGI House Hackathon on 11/15/24.
+The API allows `http://localhost:3000`. `POST /analyze` takes `{"country": "France"}` and returns `sentiment`, `figures_events`, and `threats`.
+
+Do not commit `backend/.venv`. A bearer token is hardcoded in `backend/app/services/country_analysis.py`. Rotate that credential and move it out of the source. It is not repeated here.
