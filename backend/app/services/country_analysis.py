@@ -1,3 +1,4 @@
+import os
 import requests
 from .threat_analysis import get_threat_analysis_prompt
 from fastapi import HTTPException
@@ -85,12 +86,15 @@ def format_poi_events_question(country, home_country):
     }}"""
 
 def ask_model(question, max_retries=3):
+    token = os.environ.get("LLAMA_API_TOKEN")
+    if not token:
+        raise RuntimeError("Set LLAMA_API_TOKEN")
     for attempt in range(max_retries):
         try:
             response = requests.post(
                 "https://hackathon.niprgpt.mil/llama/v1/chat/completions",
                 headers={
-                    "Authorization": "Bearer REDACTED",
+                    "Authorization": f"Bearer {token}",
                     "Content-Type": "application/json"
                 },
                 json={
